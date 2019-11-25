@@ -87,3 +87,34 @@ head(merged)
 ```
 
 
+## Extended by Mario Pena
+
+
+## dplyr::count()
+
+### Usage: count(x, ..., wt = NULL, sort = FALSE)
+
+**Count number of rows in each group defined by the variables in... Also tally()**. *count(Iris, Species)*
+    
+**Example**
+
+This function will help count the number of matches in each league, however, we add the mutate function to divide the number by 2 because the count includes the two teams in each match:
+
+```{r}
+merged_count <- merged %>% count(league.x) %>% mutate(matches = n/2)
+merged_count
+```
+
+## ggplot2::ggplot()
+
+### Usage: ggplot(data = DATA) + GEOM_FUNCTION(mapping = aes (MAPPING), stat = sTAT, position = POSITION) + COORDINATE_FUNCTION + FACET_FUNCTION + SCALE_FUNCTION + THEME_FUNCTION
+
+**Use data frame as input for a graphic and specify the set of plot aesthetics intended to be common throughout all subsequent layers unless specifically overridden.** *ggplot(data = mpg, aes(x = city, y = hwy)) Begins a plot that you finis by adding layers to.*
+    
+**Example**
+
+The ggplot() function below is used to visualize the count of matches in each league. I have added different layers such as title, and labels:
+
+```{r}
+ggplot(merged_count, aes(x=reorder(league.x, -matches), matches)) + geom_bar(stat="identity", width = 0.5, fill = "tomato2") + labs(x = "Leagues", y = "Count", title = "League Matches") + theme(axis.text.x = element_text(angle = 60, hjust = 1, size=8))
+```
